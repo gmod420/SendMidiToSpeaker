@@ -21,13 +21,18 @@
     </properties>
 
     <dependencies>
-        <!-- <dependency>
+        <dependency>
+        <groupId>com.midiAudioProvider</groupId>
+        <artifactId>drum-audio-generator</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>jmusic</groupId>
             <artifactId>jmusic</artifactId>
             <version>1.6.5</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/jMusic1.6.5.jar</systemPath>
-        </dependency> -->
+        </dependency>
     </dependencies>
 
     <build>
@@ -58,7 +63,7 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <!-- Required to include system-scoped JARs -->
-                    <includeSystemScope>true</includeSystemScope>
+<!--                    <includeSystemScope>true</includeSystemScope>-->
                 </configuration>
                 <executions>
                     <execution>

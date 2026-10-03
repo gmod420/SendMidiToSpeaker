@@ -22,7 +22,7 @@ public class MidiListener {
         for (MidiDevice.Info info : connectedDevices) {
             MidiDevice device = MidiSystem.getMidiDevice(info);
             boolean isInputDevice = device.getMaxTransmitters() != 0;
-            boolean isMyDevice = info.getName().toLowerCase().contains(name);
+            boolean isMyDevice = info.getName().contains(name);
 
             if (isInputDevice && isMyDevice){
                 this.target = device;
