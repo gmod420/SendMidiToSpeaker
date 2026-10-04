@@ -2,32 +2,32 @@ package com.midi;
 
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
-import com.instrumentBuilder.BassDrum;
+
+import com.Helpers.SynthHelper;
+
+import static jm.constants.DrumMap.ACOUSTIC_BASS_DRUM;
+
+//TODO: Add new package to map input noteNumber to corresponding output pitch
+//TODO: Latency issues! See how to speed up even further!!
 
 public class MidiInputReceiver implements Receiver{
-    // TODO: Implement class for MidiInputListener
-    // Understand working
+    private final static byte pitch = ACOUSTIC_BASS_DRUM;
 
     @Override
     public void send(MidiMessage message, long timeStamp) { //In current implementation this gets called every time a message arrives
-        //Filter based on note number recieved
         byte[] note = message.getMessage();
-        int noteNumber = note[1];
-        int velocity = note[2];
-        messageRouter(noteNumber, velocity);
+        byte noteNumber = note[1];
+        byte velocity = note[2];
+        trigger(noteNumber, velocity);
     }
 
-    public void messageRouter(int noteNumber, int velocity){
-        //TODO: Try switch case or dynamic hashmap to runnable - for now simple if
-        BassDrum bassDrum = new BassDrum();
-        bassDrum.initSynthesizer();
-        if(noteNumber == 36) {
-            bassDrum.setVelocity(velocity);
-            bassDrum.playBassDrumHit();
-            System.out.println("Bass Drum Struck");
+    public void trigger(byte noteNumber, byte velocity) {
+        if (noteNumber == 36) {
+            SynthHelper.getInstance().playDrumAction(pitch, velocity);
         }
     }
 
     @Override
-    public void close(){}
+    public void close(){
+    }
 }
