@@ -20,7 +20,7 @@ public final class SynthHelper {
     }
 
     //TODO- Logging: think about it and implement later
-    //TODO: Check if latency can be reduced in any way
+    //TODO: Latency - minimize buffer size and preset latency
     public void initSynthesizer() {
         try {
             if (synth != null && synth.isOpen()) {
@@ -43,19 +43,19 @@ public final class SynthHelper {
 //        System.out.println("Synthesizer closed");
     }
 
-    public void playDrumAction(byte pitch, byte velocity){
+    public void playDrumAction(int pitch, byte velocity){
 //        if (synthReceiver == null) {
 //            throw new IllegalStateException("Synthesizer not initialized - call initSynthesizer() first");
 //        }
         try {
             ShortMessage noteOn = new ShortMessage();
-            noteOn.setMessage(ShortMessage.NOTE_ON, channel, (int)pitch, (int)velocity);
+            noteOn.setMessage(ShortMessage.NOTE_ON, channel, pitch, (int)velocity);
             synthReceiver.send(noteOn, -1); // -1 = send immediately
 //            System.out.println("BD Note on, velocity: " + Integer.valueOf(velocity).toString()); //This line is hit
 
             // Note OFF
             ShortMessage noteOff = new ShortMessage();
-            noteOff.setMessage(ShortMessage.NOTE_OFF, channel, (int)pitch, 0);
+            noteOff.setMessage(ShortMessage.NOTE_OFF, channel, pitch, 0);
             synthReceiver.send(noteOff, -1);
 //            System.out.println("BD note off"); //This line reached
         } catch (InvalidMidiDataException e){
